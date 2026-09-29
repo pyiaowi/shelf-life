@@ -1,0 +1,47 @@
+### List all products
+GET http://localhost:8080/api/products
+
+### Get one product
+GET http://localhost:8080/api/products/1
+
+### Add a product (expect 201 Created)
+POST http://localhost:8080/api/products
+Content-Type: application/json
+
+{
+  "name": "Glow Drops",
+  "brand": "Lumen Co",
+  "category": "SKINCARE",
+  "receivedDate": "2026-09-20",
+  "paoMonths": 12
+}
+
+### Invalid product (expect 400 with fieldErrors)
+POST http://localhost:8080/api/products
+Content-Type: application/json
+
+{
+  "name": "",
+  "brand": "Lumen Co",
+  "category": "SKINCARE"
+}
+
+### Mark product 5 as opened and filmed (expect 200)
+PUT http://localhost:8080/api/products/5
+Content-Type: application/json
+
+{
+  "name": "Glow Drops",
+  "brand": "Lumen Co",
+  "category": "SKINCARE",
+  "receivedDate": "2026-09-20",
+  "openedDate": "2026-09-25",
+  "paoMonths": 12,
+  "contentStatus": "FILMED"
+}
+
+### Delete product 5 (expect 204 No Content)
+DELETE http://localhost:8080/api/products/5
+
+### Missing product (expect 404)
+GET http://localhost:8080/api/products/999

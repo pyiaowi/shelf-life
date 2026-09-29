@@ -1,0 +1,106 @@
+<section class="list-head">
+  <h1>Your shelf</h1>
+
+  <div class="views" aria-label="Quick filters">
+    @for (v of views; track v.value) {
+      <button
+        type="button"
+        class="view-chip"
+        [class.active]="view() === v.value"
+        [attr.aria-pressed]="view() === v.value"
+        (click)="view.set(v.value)"
+      >
+        {{ v.label }}
+        <span class="count">{{ counts()[v.value] }}</span>
+      </button>
+    }
+  </div>
+
+  <div class="toolbar">
+    <input
+      type="search"
+      placeholder="Search name, brand or shade"
+      aria-label="Search products"
+      [value]="search()"
+      (input)="onSearch($event)"
+    />
+    <select aria-label="Filter by category" (change)="onCategory($event)">
+      <option value="ALL" [selected]="category() === 'ALL'">All categories</option>
+      @for (c of categories; track c.value) {
+        <option [value]="c.value" [selected]="category() === c.value">{{ c.label }}</option>
+      }
+    </select>
+  </div>
+</section>
+
+@if (loading()) {
+  <p class="state">Loading your shelf…</p>
+} @else if (error()) {
+  <div class="state state-error">
+    <p>{{ error() }}</p>
+    <button type="button" class="btn" (click)="load()">Try again</button>
+  </div>
+} @else if (products().length === 0) {
+  <div class="state">
+    <p>Nothing on the shelf yet. Add the first PR package you received.</p>
+    <a routerLink="/products/new" class="btn btn-primary">Add product</a>
+  </div>
+} @else if (filtered().length === 0) {
+  <div class="state">
+    <p>No products match these filters.</p>
+    <button type="button" class="btn" (click)="clearFilters()">Show everything</button>
+  </div>
+} @else {
+  <ul class="grid">
+    @for (p of filtered(); track p.id) {
+      <li class="card" [attr.data-expiry]="p.expiryStatus">
+        <div class="card-meta">
+          <span>{{ p.brand }}</span>
+          <span>{{ categoryLabel(p.category) }}</span>
+        </div>
+
+        <h2 class="product-name">{{ p.name }}</h2>
+        @if (p.shade) {
+          <p class="shade">{{ p.shade }}</p>
+        }
+
+        <div class="expiry">
+          <svg class="jar" viewBox="0 0 40 40" aria-hidden="true">
+            <path d="M9 17h22v15a4 4 0 0 1-4 4H13a4 4 0 0 1-4-4z" />
+            <path d="M8 12.5 30 6l1.2 4.2-22 6.5z" />
+            @if (p.paoMonths) {
+              <text x="20" y="30" text-anchor="middle">{{ p.paoMonths }}M</text>
+            }
+          </svg>
+          <div>
+            <strong>{{ expiryHeadline(p) }}</strong>
+            @if (p.effectiveExpiry) {
+              <span>{{ p.expiryStatus === 'EXPIRED' ? 'Expired on' : 'Use by' }} {{ p.effectiveExpiry | date: 'd MMM y' }}</span>
+            } @else if (p.paoMonths && !p.openedDate) {
+              <span>Unopened. The {{ p.paoMonths }}-month clock starts when you open it.</span>
+            } @else {
+              <span>Add a printed expiry or PAO to track it.</span>
+            }
+          </div>
+        </div>
+
+        <label class="status-field">
+          <span>Content</span>
+          <select (change)="onStatusChange(p, $event)" [attr.data-status]="p.contentStatus">
+            @for (s of contentStatuses; track s.value) {
+              <option [value]="s.value" [selected]="p.contentStatus === s.value">{{ s.label }}</option>
+            }
+          </select>
+        </label>
+
+        <div class="card-actions">
+          @if (!p.openedDate) {
+            <button type="button" class="btn btn-small" (click)="markOpened(p)">Mark opened today</button>
+          }
+          <a class="btn btn-small" [routerLink]="['/products', p.id, 'edit']">Edit</a>
+          <button type="button" class="btn btn-small btn-danger" (click)="remove(p)">Delete</button>
+        </div>
+      </li>
+    }
+  </ul>
+}

@@ -1,0 +1,7 @@
+# Built Angular files copied into Spring Boot (Step 11); rebuild them instead of committing
+api/src/main/resources/static/
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+.vscode/

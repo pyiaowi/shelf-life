@@ -1,0 +1,116 @@
+<a routerLink="/" class="back-link">Back to your shelf</a>
+<h1>{{ isEdit() ? 'Edit product' : 'Add a product' }}</h1>
+
+@if (loading()) {
+  <p class="state">Loading product…</p>
+} @else {
+  <form class="product-form" [formGroup]="form" (ngSubmit)="submit()" novalidate>
+    @if (formError()) {
+      <p class="form-error" role="alert">{{ formError() }}</p>
+    }
+
+    <fieldset>
+      <legend>The product</legend>
+
+      <div class="field">
+        <label for="name">Product name</label>
+        <input id="name" formControlName="name" placeholder="Barrier Repair Serum" />
+        @if (showError('name')) {
+          <small class="error">{{ serverErrors()['name'] ?? 'Enter the product name (up to 120 characters).' }}</small>
+        }
+      </div>
+
+      <div class="field">
+        <label for="brand">Brand</label>
+        <input id="brand" formControlName="brand" placeholder="Dewdrop Labs" />
+        @if (showError('brand')) {
+          <small class="error">{{ serverErrors()['brand'] ?? 'Enter the brand (up to 80 characters).' }}</small>
+        }
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="category">Category</label>
+          <select id="category" formControlName="category">
+            @for (c of categories; track c.value) {
+              <option [value]="c.value">{{ c.label }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="shade">Shade or variant <span class="optional">optional</span></label>
+          <input id="shade" formControlName="shade" placeholder="02 Rosewood" />
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Dates and shelf life</legend>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="receivedDate">Date received</label>
+          <input id="receivedDate" type="date" formControlName="receivedDate" [max]="today" />
+          @if (showError('receivedDate')) {
+            <small class="error">{{ serverErrors()['receivedDate'] ?? 'Pick the date the package arrived.' }}</small>
+          }
+        </div>
+
+        <div class="field">
+          <label for="openedDate">Date opened <span class="optional">optional</span></label>
+          <input id="openedDate" type="date" formControlName="openedDate" [max]="today" />
+          @if (showError('openedDate')) {
+            <small class="error">{{ serverErrors()['openedDate'] }}</small>
+          }
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="paoMonths">Months after opening <span class="optional">optional</span></label>
+          <input id="paoMonths" type="number" min="1" max="60" formControlName="paoMonths" placeholder="12" />
+          <small class="hint">The number on the open-jar symbol, like 6M or 12M.</small>
+          @if (showError('paoMonths')) {
+            <small class="error">{{ serverErrors()['paoMonths'] ?? 'Use a number from 1 to 60.' }}</small>
+          }
+        </div>
+
+        <div class="field">
+          <label for="expiryDate">Printed expiry date <span class="optional">optional</span></label>
+          <input id="expiryDate" type="date" formControlName="expiryDate" />
+          <small class="hint">Usually stamped on the box or crimp.</small>
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Content</legend>
+
+      <div class="field">
+        <label for="contentStatus">Content status</label>
+        <select id="contentStatus" formControlName="contentStatus">
+          @for (s of contentStatuses; track s.value) {
+            <option [value]="s.value">{{ s.label }}</option>
+          }
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="notes">Notes <span class="optional">optional</span></label>
+        <textarea id="notes" rows="4" formControlName="notes"
+          placeholder="Campaign, deadline, hooks to try, first impressions"></textarea>
+        @if (showError('notes')) {
+          <small class="error">{{ serverErrors()['notes'] ?? 'Keep notes under 1000 characters.' }}</small>
+        }
+      </div>
+    </fieldset>
+
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary" [disabled]="saving()">
+        {{ saving() ? 'Saving…' : isEdit() ? 'Save changes' : 'Add to shelf' }}
+      </button>
+      <a routerLink="/" class="btn">Cancel</a>
+    </div>
+  </form>
+}

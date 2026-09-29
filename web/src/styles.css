@@ -1,0 +1,418 @@
+/* You can add global styles to this file, and also import other style files */
+/* ---------- Design tokens ---------- */
+:root {
+  --paper: #fbf7f8;
+  --surface: #ffffff;
+  --ink: #2a1a23;
+  --muted: #7a6570;
+  --line: #e8d9df;
+  --rose: #a33b5e;
+  --rose-dark: #862c4b;
+  --blush: #f4e3e9;
+  --ok: #4f7a5f;
+  --ok-bg: #eaf2ec;
+  --soon: #9a5f0c;
+  --soon-bg: #fbf0dc;
+  --expired: #b42318;
+  --expired-bg: #fbe8e6;
+
+  --font-body: 'Figtree', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-display: 'Young Serif', Georgia, 'Times New Roman', serif;
+  --radius: 14px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+h1,
+h2 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: 1.15;
+  margin: 0;
+}
+
+h1 {
+  font-size: clamp(2rem, 5vw, 2.75rem);
+}
+
+a {
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 3px solid var(--rose);
+  outline-offset: 2px;
+}
+
+input,
+select,
+textarea,
+button {
+  font: inherit;
+  color: inherit;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface);
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--rose);
+}
+
+/* ---------- Layout ---------- */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem clamp(1rem, 4vw, 2.5rem);
+  border-bottom: 1px solid var(--line);
+  background: var(--surface);
+}
+
+.wordmark {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  text-decoration: none;
+  color: var(--rose);
+}
+
+.page {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 2rem clamp(1rem, 4vw, 2.5rem) 4rem;
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.6rem 1.1rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.btn:hover {
+  border-color: var(--rose);
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.btn-primary {
+  background: var(--rose);
+  border-color: var(--rose);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: var(--rose-dark);
+}
+
+.btn-small {
+  padding: 0.35rem 0.8rem;
+  font-size: 0.875rem;
+}
+
+.btn-danger {
+  color: var(--expired);
+}
+
+/* ---------- Shared states ---------- */
+.state {
+  padding: 3rem 1rem;
+  text-align: center;
+  color: var(--muted);
+}
+
+.state p {
+  margin: 0 0 1rem;
+}
+
+.state-error {
+  color: var(--expired);
+}
+
+/* ---------- Inventory list ---------- */
+.list-head {
+  display: grid;
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.views {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.view-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 0.9rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  cursor: pointer;
+}
+
+.view-chip .count {
+  min-width: 1.6rem;
+  padding: 0 0.4rem;
+  border-radius: 999px;
+  background: var(--blush);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.view-chip.active {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: #fff;
+}
+
+.view-chip.active .count {
+  background: var(--rose);
+}
+
+.toolbar {
+  display: grid;
+  grid-template-columns: 1fr minmax(160px, 220px);
+  gap: 0.75rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 1.25rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.card-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.card-meta span:first-child {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.product-name {
+  font-size: 1.35rem;
+}
+
+.shade {
+  margin: -0.3rem 0 0;
+  color: var(--muted);
+}
+
+/* The expiry block is the heart of each card: its color follows the status. */
+.expiry {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  margin: 0.4rem 0;
+  padding: 0.75rem;
+  border-radius: 10px;
+  background: var(--paper);
+  --tone: var(--muted);
+}
+
+.card[data-expiry='OK'] .expiry {
+  background: var(--ok-bg);
+  --tone: var(--ok);
+}
+
+.card[data-expiry='EXPIRING_SOON'] .expiry {
+  background: var(--soon-bg);
+  --tone: var(--soon);
+}
+
+.card[data-expiry='EXPIRED'] .expiry {
+  background: var(--expired-bg);
+  --tone: var(--expired);
+}
+
+.expiry strong {
+  display: block;
+  color: var(--tone);
+  font-size: 1.05rem;
+}
+
+.expiry span {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.jar {
+  flex: none;
+  width: 44px;
+  height: 44px;
+  fill: none;
+  stroke: var(--tone);
+  stroke-width: 2;
+  stroke-linejoin: round;
+}
+
+.jar text {
+  fill: var(--tone);
+  stroke: none;
+  font-family: var(--font-body);
+  font-size: 9px;
+  font-weight: 600;
+}
+
+.status-field {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.status-field select {
+  padding: 0.4rem 0.6rem;
+}
+
+.status-field select[data-status='NOT_STARTED'] {
+  border-color: var(--rose);
+  color: var(--rose);
+  font-weight: 600;
+}
+
+.card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: auto;
+  padding-top: 0.5rem;
+}
+
+/* ---------- Product form ---------- */
+.back-link {
+  display: inline-block;
+  margin-bottom: 0.75rem;
+  color: var(--muted);
+}
+
+.product-form {
+  display: grid;
+  gap: 1.5rem;
+  max-width: 720px;
+  margin-top: 1.5rem;
+}
+
+fieldset {
+  display: grid;
+  gap: 1rem;
+  margin: 0;
+  padding: 1.25rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+legend {
+  padding: 0 0.4rem;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+}
+
+.field {
+  display: grid;
+  gap: 0.35rem;
+  align-content: start;
+}
+
+.field label {
+  font-weight: 500;
+}
+
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.optional {
+  color: var(--muted);
+  font-weight: 400;
+  font-size: 0.85rem;
+}
+
+.hint {
+  color: var(--muted);
+}
+
+.error {
+  color: var(--expired);
+}
+
+.form-error {
+  margin: 0;
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  background: var(--expired-bg);
+  color: var(--expired);
+}
+
+.form-actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+/* ---------- Small screens ---------- */
+@media (max-width: 600px) {
+  .toolbar,
+  .field-row {
+    grid-template-columns: 1fr;
+  }
+}
