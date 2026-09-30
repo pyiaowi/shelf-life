@@ -49,6 +49,12 @@
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true
+            },
+            "bundle": {
+              "outputPath": {
+                "base": "../api/src/main/resources/static",
+                "browser": ""
+              }
             }
           },
           "defaultConfiguration": "production"

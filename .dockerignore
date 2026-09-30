@@ -1,0 +1,6 @@
+.git
+web/node_modules
+wed/dist
+web/.angular
+api/target
+api/src/main/resources/static

@@ -1,8 +1,18 @@
 <header class="topbar">
-  <a routerLink="/" class="wordmark">Shelf Life</a>
-  <a routerLink="/products/new" class="btn btn-primary">Add product</a>
+  <a routerLink="/" class="wordmark">
+    Shelf Life
+    <svg class="wordmark-heart" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M12 7.5C10.3 4.4 4 4.9 4 9.5c0 4.2 8 9 8 9s8-4.8 8-9c0-4.6-6.3-5.1-8-2z" />
+    </svg>
+  </a>
+  <nav class="topbar-actions">
+    <a routerLink="/products/new" class="btn btn-primary">Add product</a>
+    <a href="/logout" class="btn">Log out</a>
+  </nav>
 </header>
 
 <main class="page">
   <router-outlet />
 </main>
+
+<footer class="love-note">Made with love, just for Lane ♡</footer>

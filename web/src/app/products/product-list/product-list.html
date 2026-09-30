@@ -1,5 +1,5 @@
 <section class="list-head">
-  <h1>Your shelf</h1>
+  <h1>Lane's Shelf ♡</h1>
 
   <div class="views" aria-label="Quick filters">
     @for (v of views; track v.value) {
@@ -42,7 +42,7 @@
   </div>
 } @else if (products().length === 0) {
   <div class="state">
-    <p>Nothing on the shelf yet. Add the first PR package you received.</p>
+    <p>Your shelf is empty for now, mahal. Add the first PR package you received.</p>
     <a routerLink="/products/new" class="btn btn-primary">Add product</a>
   </div>
 } @else if (filtered().length === 0) {

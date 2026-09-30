@@ -29,7 +29,7 @@
 
 body {
   margin: 0;
-  background: var(--paper);
+  background: var(--paper) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cg fill='%23a33b5e' fill-opacity='0.07'%3E%3Cpath d='M30 38c-4-7-16-6-16 3 0 8 16 17 16 17s16-9 16-17c0-9-12-10-16-3z'/%3E%3Cpath d='M88 84c-3-5-11-4-11 2 0 6 11 12 11 12s11-6 11-12c0-6-8-7-11-2z'/%3E%3C/g%3E%3C/svg%3E");
   color: var(--ink);
   font-family: var(--font-body);
   font-size: 16px;
@@ -415,4 +415,29 @@ legend {
   .field-row {
     grid-template-columns: 1fr;
   }
+}
+
+.topbar-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* ---------- Personal touches ---------- */
+.wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.wordmark-heart {
+  width: 20px;
+  height: 20px;
+  fill: var(--rose);
+}
+
+.love-note {
+  padding: 0 1rem 2.5rem;
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.9rem;
 }

@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sign in | Shelf Life</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600&family=Young+Serif&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --paper: #fbf7f8;
+      --surface: #ffffff;
+      --ink: #2a1a23;
+      --muted: #7a6570;
+      --line: #e8d9df;
+      --rose: #a33b5e;
+      --rose-dark: #862c4b;
+      --ok: #4f7a5f;
+      --ok-bg: #eaf2ec;
+      --expired: #b42318;
+      --expired-bg: #fbe8e6;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 1.5rem;
+      background: var(--paper) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cg fill='%23a33b5e' fill-opacity='0.07'%3E%3Cpath d='M30 38c-4-7-16-6-16 3 0 8 16 17 16 17s16-9 16-17c0-9-12-10-16-3z'/%3E%3Cpath d='M88 84c-3-5-11-4-11 2 0 6 11 12 11 12s11-6 11-12c0-6-8-7-11-2z'/%3E%3C/g%3E%3C/svg%3E");
+      color: var(--ink);
+      font-family: 'Figtree', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      line-height: 1.5;
+    }
+    main {
+      width: 100%;
+      max-width: 380px;
+      padding: 2rem;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: var(--surface);
+      box-shadow: 0 18px 40px -24px rgba(163, 59, 94, 0.45);
+    }
+    .jar {
+      width: 52px;
+      height: 52px;
+      fill: none;
+      stroke: var(--rose);
+      stroke-width: 2;
+      stroke-linejoin: round;
+    }
+    .jar .heart {
+      fill: var(--rose);
+      stroke: none;
+    }
+    .signoff {
+      margin: 1.5rem 0 0;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+    h1 {
+      margin: 0.75rem 0 0.25rem;
+      font-family: 'Young Serif', Georgia, serif;
+      font-weight: 400;
+      font-size: 2rem;
+      color: var(--rose);
+    }
+    .lede { margin: 0 0 1.5rem; color: var(--muted); }
+    form { display: grid; gap: 1rem; }
+    label { display: grid; gap: 0.35rem; font-weight: 500; }
+    input {
+      width: 100%;
+      padding: 0.65rem 0.75rem;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      font: inherit;
+      color: inherit;
+    }
+    input:focus { outline: none; border-color: var(--rose); }
+    :focus-visible { outline: 3px solid var(--rose); outline-offset: 2px; }
+    button {
+      margin-top: 0.5rem;
+      padding: 0.7rem 1rem;
+      border: none;
+      border-radius: 999px;
+      background: var(--rose);
+      color: #fff;
+      font: inherit;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    button:hover { background: var(--rose-dark); }
+    .message {
+      display: none;
+      margin: 0 0 1rem;
+      padding: 0.65rem 0.9rem;
+      border-radius: 10px;
+      font-size: 0.95rem;
+    }
+    .message.error { background: var(--expired-bg); color: var(--expired); }
+    .message.info { background: var(--ok-bg); color: var(--ok); }
+    .message.show { display: block; }
+  </style>
+</head>
+<body>
+  <main>
+    <svg class="jar" viewBox="0 0 40 40" aria-hidden="true">
+      <path d="M9 17h22v15a4 4 0 0 1-4 4H13a4 4 0 0 1-4-4z" />
+      <path d="M8 12.5 30 6l1.2 4.2-22 6.5z" />
+      <path class="heart" d="M20 23.5c-1.6-2.8-6.2-2.3-6.2 1.1 0 3 6.2 6.6 6.2 6.6s6.2-3.6 6.2-6.6c0-3.4-4.6-3.9-6.2-1.1z" />
+    </svg>
+    <h1>Shelf Life</h1>
+    <p class="lede">Welcome back, Bubby. Your shelf missed you.</p>
+
+    <p id="error" class="message error" role="alert">Hmm, that's not quite it. Try again, love.</p>
+    <p id="logout" class="message info" role="status">Signed out. See you soon, love.</p>
+
+    <form method="post" action="/login">
+      <label>
+        Username
+        <input name="username" autocomplete="username" required autofocus>
+      </label>
+      <label>
+        Password
+        <input name="password" type="password" autocomplete="current-password" required>
+      </label>
+      <button type="submit">Open my shelf</button>
+    </form>
+
+    <p class="signoff">Made with love, just for you ♡</p>
+  </main>
+
+  <script>
+    // Spring Security adds ?error after a failed login and ?logout after signing out
+    const params = new URLSearchParams(location.search);
+    if (params.has('error')) document.getElementById('error').classList.add('show');
+    if (params.has('logout')) document.getElementById('logout').classList.add('show');
+  </script>
+</body>
+</html>
